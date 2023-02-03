@@ -1,0 +1,13 @@
+ngx_addon_name=ngx_http_auth_cookie_module
+if ! test -f "objs/login.html"; then
+	cp "$ngx_addon_dir/login.html" "objs/login.html"
+fi
+ngx_module_type=HTTP
+ngx_module_name=ngx_http_auth_cookie_module
+ngx_module_incs=
+ngx_module_deps=
+ngx_module_srcs="$ngx_addon_dir/ngx_http_auth_cookie_module.c"
+ngx_module_libs="-ljson-c"
+ngx_module_order="$ngx_module_name ngx_http_access_module"
+
+. auto/module

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8" />
+		<meta content="origin" name="referrer" />
+		<meta http-equiv="cache-control" content="no-siteapp" />
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="theme-color" content="#d08080" />
+		<meta name="description" content="Login to view pages" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0" />
+		<title>Login</title>
+		<style>
+			*{margin: 0;}
+			div#background{
+				position: fixed;
+				display: flex;
+				width: 100%;
+				height: 100%;
+				background-color: #d08080;
+				background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23d04040' fill-opacity='0.99'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+			}
+			div#login-box{
+				background-color: white;
+				margin: auto;
+				padding: 24px;
+				min-width: 16rem;
+				border-radius: 2px;
+			}
+			div#login-box table{
+				width: 100%;
+			}
+			tr#login-username-label td,
+			tr#login-password-label td,
+			tr#login-submit td{
+				padding-top: 8px;
+			}
+			tr#login-username td,
+			tr#login-password td{
+				padding-bottom: 8px;
+			}
+			div#bottom-tips{
+				position: fixed;
+				bottom: 8px;
+				right: 8px;
+				color: white;
+				font-size: smaller;
+			}
+			tr#login-title td{
+				text-align: center;
+				height: 2rem;
+			}
+			tr#login-status td{
+				text-align: center;
+				font-size: small;
+				font-weight: bold;
+				border-radius: 2px;
+				height: 1.5rem;
+			}
+			label.input-hint{
+				color: #404040;
+				font-size: small;
+			}
+			input.login-input{
+				width: 100%;
+				padding: 0;
+				border: 0;
+				outline: 0;
+				height: 2rem;
+				border-bottom: 1px solid lightgray;
+			}
+			input.login-input:focus{
+				border-bottom: 1px solid darkblue;
+			}
+			input#submit{
+				height: 2rem;
+				border: 0;
+				border-radius: 2px;
+				color: white;
+				width: 100%;
+				outline-color: blue;
+				background-color: #1d80c8;
+			}
+			.success, .failed{
+				color: white;
+				cursor: pointer;
+				box-shadow: 0 16px 28px 0 rgb(0 0 0 / 22%), 0 25px 55px 0 rgb(0 0 0 / 21%);
+			}
+			.success{background-color: green;}
+			.failed{background-color: red;}
+			.loading{
+				background-color: white;
+				color: black;
+			}
+			.center{text-align: center;}
+			.shadow{box-shadow: 0 16px 28px 0 rgb(0 0 0 / 22%), 0 25px 55px 0 rgb(0 0 0 / 21%);}
+			label{user-select: none;}
+		</style>
+	</head>
+	<body>
+		<div id="background">
+			<div id="login-box" class="shadow">
+				<form id="login-form" method="post" action="?action=login">
+					<table><tbody>
+						<tr id="login-title"><td>
+							<label
+								id="input-title"
+								for="login-form"
+							>Login</label>
+						</td></tr>
+						<tr id="login-username-label"><td>
+							<label
+								id="title-username"
+								class="input-hint"
+								for="username"
+							>Username</label>
+						</td></tr>
+						<tr id="login-username"><td>
+							<input
+								type="text"
+								name="username"
+								id="username"
+								autocomplete="username"
+								alt="Username"
+								class="login-input"
+								autofocus
+								required
+								disabled
+							/>
+						</td></tr>
+						<tr id="login-password-label"><td>
+							<label
+								id="title-password"
+								class="input-hint"
+								for="password"
+							>Password</label>
+						</td></tr>
+						<tr id="login-password"><td>
+							<input
+								type="password"
+								name="password"
+								id="password"
+								autocomplete="password"
+								alt="Password"
+								class="login-input"
+								required
+								disabled
+							/>
+						</td></tr>
+						<tr id="login-status"><td class="failed">Load failed</td></tr>
+						<tr id="login-submit"><td>
+							<input
+								type="submit"
+								id="submit"
+								value="Login"
+								class="shadow"
+								disabled
+							/>
+						</td></tr>
+					</tbody></table>
+				</form>
+			</div>
+			<div id="bottom-tips">Power By Auth</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		const sha256=function r(o){function f(r,o){return r>>>o|r<<32-o}for(var t,n,a=Math.pow,c=a(2,32),
+		e="length",i="",h=[],u=8*o[e],v=r.h=r.h||[],l=r.k=r.k||[],s=l[e],g={},k=2;s<64;k++)if(!g[k]){for(
+		t=0;t<313;t+=k)g[t]=k;v[s]=a(k,.5)*c|0,l[s++]=a(k,1/3)*c|0}for(o+="";o[e]%64-56;)o+="\0";for(t=0;
+		t<o[e];t++){if((n=o.charCodeAt(t))>>8)return;h[t>>2]|=n<<(3-t)%4*8}for(h[h[e]]=u/c|0,h[h[e]]=u,n=
+		0;n<h[e];){var d=h.slice(n,n+=16),p=v;for(v=v.slice(0,8),t=0;t<64;t++){var w=d[t-15],A=d[t-2],C=v
+		[0],M=v[4],M=v[7]+(f(M,6)^f(M,11)^f(M,25))+(M&v[5]^~M&v[6])+l[t]+(d[t]=t<16?d[t]:d[t-16]+(f(w,7)^
+		f(w,18)^w>>>3)+d[t-7]+(f(A,17)^f(A,19)^A>>>10)|0);(v=[M+((f(C,2)^f(C,13)^f(C,22))+(C&v[1]^C&v[2]^
+		v[1]&v[2]))|0].concat(v))[4]=v[4]+M|0}for(t=0;t<8;t++)v[t]=v[t]+p[t]|0}for(t=0;t<8;t++)for(n=3;n+
+		1;n--){var S=v[t]>>8*n&255;i+=(S<16?0:"")+S.toString(16)}return i};
+	</script>
+	<script type="text/javascript">
+		let config={
+			no_username:false,
+		};
+		let api="";
+		const getObj=sel=>document.querySelector(sel);
+		const addEvent=(sel,type,cb)=>getObj(sel).addEventListener(type,cb);
+		function show_status(msg,mode="failed"){
+			const tr=getObj("tr#login-status");
+			const td=getObj("tr#login-status td");
+			tr.style.display=null;
+			td.innerText=msg;
+			td.classList.remove("success");
+			td.classList.remove("failed");
+			td.classList.remove("loading");
+			td.classList.add(mode);
+			tr.dataset.status=mode;
+		}
+		function set_enabled(enabled){
+			if(!config.no_username)
+				getObj("input#username").disabled=!enabled;
+			getObj("input#password").disabled=!enabled;
+			getObj("input#submit").disabled=!enabled;
+		}
+		function hide_status(force=false){
+			const tr=getObj("tr#login-status");
+			if(tr.dataset.status==="loading"&&!force)return;
+			tr.style.display="none";
+		}
+		function return_page(){
+			show_status("Jumping to page...","success");
+			const params=new URLSearchParams(location.search);
+			let orig=params.get("redirect");
+			if(!orig)orig="/";
+			location.href=orig;
+		}
+		async function do_auth(){
+			const username=getObj("input#username");
+			const password=getObj("input#password");
+			let data={};
+			if(!config.no_username)
+				data.username=username.value;
+			switch(config.algo){
+				case "plain":data.password=password.value;break;
+				case "sha256":data.password=sha256(password.value);break;
+				default:throw new Error("unknown algo "+config.algo);
+			}
+			data.algo=config.algo;
+			const login=await fetch(api+"?action=login",{
+				method:"POST",
+				headers:{"Content-Type":"application/json"},
+				body:JSON.stringify(data),
+			});
+			if(!login.ok||login.status!==200)
+				throw new Error("HTTP error: "+login.status);
+			const json=await login.json();
+			if(!json.success)throw new Error(json.message??"unknown error");
+			if(json.add_cookies)for(let i in json.add_cookies)
+				document.cookie=i+"="+json.add_cookies[i];
+			hide_status(true);
+			return_page();
+		}
+		function on_submit(){
+			const on_err=err=>{
+				console.error(err);
+				show_status("Auth error: "+err.message);
+				set_enabled(true);
+			};
+			try{
+				set_enabled(false);
+				show_status("Authenticating","loading");
+				do_auth().catch(on_err);
+			}catch(err){on_err(err)}
+			return false;
+		}
+		function apply_config(){
+			const title=getObj("label#input-title");
+			const tr_title_user=getObj("tr#login-username-label");
+			const title_user=getObj("label#title-username");
+			const tr_input_user=getObj("tr#login-username");
+			const input_user=getObj("input#username");
+			const title_pass=getObj("label#title-password");
+			const input_pass=getObj("input#password");
+			const bottom_tips=getObj("div#bottom-tips");
+			const input_submit=getObj("input#submit")
+			if(config.no_username){
+				tr_title_user.style.display="none";
+				tr_input_user.style.display="none";
+				input_user.disabled=true;
+			}else if(config.default_username&&input_user.value==="")
+				input_user.value=config.default_username;
+			if(config.title)title.innerText=config.title;
+			if(config.footer)bottom_tips.innerText=config.footer;
+			if(config.title_username)title_user.innerText=config.title_username;
+			if(config.title_password)title_pass.innerText=config.title_password;
+			if(config.title_submit)input_submit.value=config.title_submit;
+			set_enabled(true);
+			((!config.no_username&&!config.default_username)?input_user:input_pass).focus();
+		}
+		function load_config(){
+			const on_err=err=>{
+				console.error(err);
+				show_status("Load failed: "+err.message);
+			};
+			show_status("Loading","loading");
+			try{
+				const params=new URLSearchParams(location.search);
+				let url=params.get("api");
+				if(url)api=url;
+				fetch(api+"?action=config").then(ret=>ret.json()).then(ret=>{
+					if(!ret.success)throw new Error("fetch config failed");
+					config=ret;
+					apply_config();
+					hide_status(true);
+				}).catch(on_err)
+			}catch(err){on_err(err)}
+		}
+		window.onload=()=>{
+			load_config();
+			addEvent("input#submit","click",()=>hide_status());
+			addEvent("tr#login-status","click",()=>hide_status());
+			addEvent("input#username","input",()=>hide_status());
+			addEvent("input#password","input",()=>hide_status());
+			getObj("form#login-form").onsubmit=on_submit;
+		}
+	</script>
+</html>
